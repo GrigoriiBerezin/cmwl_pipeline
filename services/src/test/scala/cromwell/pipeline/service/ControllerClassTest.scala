@@ -35,8 +35,8 @@ class ControllerClassTest extends AsyncWordSpec with Matchers with MockitoSugar 
           )
         ).thenReturn(response)
 
-        val client = new TestControllerClient
-        client.get("https://test.com/get").flatMap(_ shouldBe cromwellResponse)
+        val get_url = "https://test.com/get"
+        new TestControllerClient().get(get_url).flatMap(_ shouldBe cromwellResponse)
       }
     }
 
@@ -52,8 +52,8 @@ class ControllerClassTest extends AsyncWordSpec with Matchers with MockitoSugar 
           )
         ).thenReturn(response)
 
-        val client = new TestControllerClient
-        client.post("https://test.com/put", payload = "test payload").flatMap(_ shouldBe cromwellResponse)
+        val post_url = "https://test.com/post"
+        new TestControllerClient().post(post_url, payload = "test payload").flatMap(_ shouldBe cromwellResponse)
       }
     }
 
@@ -69,8 +69,9 @@ class ControllerClassTest extends AsyncWordSpec with Matchers with MockitoSugar 
           )
         ).thenReturn(response)
 
-        val client = new TestControllerClient
-        client.put("https://test.com/put", payload = "test payload").flatMap(_ shouldBe cromwellResponse)
+        new TestControllerClient()
+          .put("https://test.com/put", payload = "test payload")
+          .flatMap(_ shouldBe cromwellResponse)
       }
     }
   }

@@ -19,10 +19,9 @@ class ControllerClient extends HttpClient {
   override def get(url: String, params: Map[String, String] = Map(), headers: Map[String, String] = Map())(
     implicit ec: ExecutionContext
   ): Future[Response] = {
-    val request =
+    val futureResponse: Future[HttpResponse] = http.singleRequest(
       HttpRequest(method = HttpMethods.GET, uri = queryBuilder(url, params)).withHeaders(parseHeaders(headers))
-    val futureResponse: Future[HttpResponse] = http.singleRequest(request)
-
+    )
     responsify(futureResponse)
   }
 
@@ -32,11 +31,11 @@ class ControllerClient extends HttpClient {
     headers: Map[String, String] = Map(),
     payload: String = ""
   )(implicit ec: ExecutionContext): Future[Response] = {
-    val request = HttpRequest(method = HttpMethods.POST, uri = queryBuilder(url, params))
-      .withEntity(payload)
-      .withHeaders(parseHeaders(headers))
-    val futureResponse: Future[HttpResponse] = http.singleRequest(request)
-
+    val futureResponse: Future[HttpResponse] = http.singleRequest(
+      HttpRequest(method = HttpMethods.POST, uri = queryBuilder(url, params))
+        .withEntity(payload)
+        .withHeaders(parseHeaders(headers))
+    )
     responsify(futureResponse)
   }
 
@@ -46,11 +45,11 @@ class ControllerClient extends HttpClient {
     headers: Map[String, String] = Map(),
     payload: String = ""
   )(implicit ec: ExecutionContext): Future[Response] = {
-    val request = HttpRequest(method = HttpMethods.PUT, uri = queryBuilder(url, params))
-      .withEntity(payload)
-      .withHeaders(parseHeaders(headers))
-    val futureResponse: Future[HttpResponse] = http.singleRequest(request)
-
+    val futureResponse: Future[HttpResponse] = http.singleRequest(
+      HttpRequest(method = HttpMethods.PUT, uri = queryBuilder(url, params))
+        .withEntity(payload)
+        .withHeaders(parseHeaders(headers))
+    )
     responsify(futureResponse)
   }
 
